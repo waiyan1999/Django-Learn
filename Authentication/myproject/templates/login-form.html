@@ -1,0 +1,29 @@
+{% load static %}
+
+{% if messages %}
+
+{% for message in messages %}
+
+
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+  <strong>Hello {{user.username}} </strong> {{message}}
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
+{% endfor %}
+
+{% endif %}
+
+<br><br>
+<div class="container col-md-8">
+    <h3>Login Form</h3><br>
+    <form action="{% url 'login_user' %}" method="post">
+
+        {% csrf_token %}
+
+    <input type="text" name="username" id="" class="form-control"> <br>
+    <input type="password" name="password" id="" class="form-control"><br>
+    
+    <input type="submit" name="" id="" class="btn btn-primary" value="Login">
+    </form>
+</div>

@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Index {% endblock title %}
+
+{% block content %}
+
+
+
+{% if messages %}
+
+{% for message in messages %}
+
+
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+  <strong>Hello {{user.username}} </strong> {{message}}
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
+{% endfor %}
+
+{% endif %}
+
+
+
+
+<h1>This is Index</h1>
+
+{% endblock content %}

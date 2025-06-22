@@ -1,0 +1,35 @@
+#Config global
+git config --global user.email 'abc@gmail.com'
+git config --global user.name 'usr-name'
+
+#Initialization
+git init [or]  git init .
+
+#Clone Repository
+git clone github-repository
+
+#Add New file or Folder
+git add .  [or] git add note.txt
+
+#Commit
+git commit -m 'This is commit'
+
+#Push
+git push -u origin branch-name
+git push -u origin main
+
+#show all branch
+git branch 
+
+#Create branch
+git branch user1
+
+#Checkout
+git checkout main
+git checkout user1
+
+#Merge
+git merge user1
+
+
+
