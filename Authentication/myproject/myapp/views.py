@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.models import User
 from django.contrib import messages
+from myapp.form import RegisterForm
 
 
 
@@ -11,8 +12,7 @@ from django.contrib import messages
 
 
 def index(request):
-    message = messages.success(request,'Welcome!')
-    
+    # message = messages.success(request,'Welcome!')
     return render(request,'index.html')
 
 
@@ -26,7 +26,7 @@ def login_user(request):
         password = request.POST['password']
         
         authentication = authenticate(username=username,password=password)
-        if authenticate:
+        if authentication:
             login(request,authentication)
             messages.success(request,'Login Successfully')
             print(messages)
@@ -34,11 +34,26 @@ def login_user(request):
             return redirect('index')
         else:
             print("Login Fail")
-            messages.error(request,'Wrong User Name and Password')
+            # messages.error(request,'Wrong User Name and Password')
             print('Login Fail')
-            return redirect('index')
-            
-        
-    
+            return render(request,'login-form.html')
     else:
         return redirect('index')
+    
+def register_user(request):
+    form = RegisterForm()
+    context = {'form':form}
+    if request.method == 'POST':
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            new_user = form.save()
+            login(request,new_user)
+            return redirect('index')
+            
+        else:
+            print ('Register Fail')
+            return render(request,'register-form.html',context)
+    
+    return render(request,'register-form.html',context)
+    
+    

@@ -16,20 +16,38 @@
 
     <div class="container-md">
     
-    {% if user.is_authenticated %}
-
-         {% include 'nav-bar.html' %}
-
-        {% block content %}
-        {% endblock content %}
-
-        {% include 'footer.html' %}
-
-    {% else %}
-
-        {% include 'login-form.html' %}
-    
+    {% comment %}
+    <div class="message">
+        {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      {% endfor %}
     {% endif %}
+    </div>
+    {% endcomment %}
+      
+    
+    
+   
+
+        {% if user.is_authenticated %}
+            <div class="authenticated">
+                
+                {% block content %}
+                {% endblock content %}
+
+                {% include 'footer.html' %}
+            </div>
+        {% else %}
+            <div class="not-authenticated">
+                {% include 'login-form.html' %}
+            </div>
+        {% endif %}
+
+    
 
    
 

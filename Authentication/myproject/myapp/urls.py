@@ -10,5 +10,8 @@ urlpatterns = [
     #Login User
     path('login-user/',views.login_user, name='login_user'),
     
+    #Register User
+    path('register-user/',views.register_user,name='register_user')
+    
     
 ]

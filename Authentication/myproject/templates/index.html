@@ -5,8 +5,9 @@
 {% block content %}
 
 
-
-{% if messages %}
+<!-- message -->
+<div class="message">
+  {% if messages %}
 
 {% for message in messages %}
 
@@ -19,10 +20,11 @@
 {% endfor %}
 
 {% endif %}
+</div>
 
-
-
-
+{% include 'nav-bar.html' %}
 <h1>This is Index</h1>
+
+
 
 {% endblock content %}
