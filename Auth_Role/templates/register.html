@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Register {% endblock title %}
+
+{% block content %}
+
+<div class="container col-md-5 mx-auto my-5 card  ">
+
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ register_form  }}
+        
+        <input type="submit" name="" id="" value="Register" class="btn btn-primary">
+
+        <strong>Login with <a href="">Account</a></strong>
+    </form>
+
+</div>
+
+{% endblock content %}

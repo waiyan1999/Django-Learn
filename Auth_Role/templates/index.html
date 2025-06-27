@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load static  %}
+{% block title %} Index {% endblock title %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+
+        {% include 'nav-bar.html' %}
+
+        <br>
+    
+
+        <h3>Your are Now Authenticated as Username:{{ user.username }}  UserRole: {{user.user_role}} </h3>
+
+        {% if user.is_superuser == True %}
+            <h1>This is super user</h1>
+        {% endif %}
+
+        <div class="customer-dashboard">
+        {% if user.user_role == 'customer' %}
+
+        <h2>This is for Customer</h2>
+
+        {% endif %}
+        </div>
+
+        <div class="agency-dashboard">
+        {% if user.user_role == 'agency' %}
+
+        <h2>This is for Agency</h2>
+
+        {% endif %}
+        </div>
+
+        <div class="owner-dashboard">
+        {% if user.user_role == 'owner' %}
+
+        <h2>This is for owner</h2>
+
+        {% endif %}
+        </div>
+
+        
+
+
+        
+
+   
+
+{% else %}
+
+    <h1> User Was not Authenticated </h1>
+    
+    <strong>
+        <a href="{% url 'login_user' %}">Login</a> Or <a href="{% url 'register_user' %}">Register </a> Here
+    </strong>
+
+{% endif %}
+
+{% endblock content %}
