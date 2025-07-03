@@ -46,17 +46,17 @@ class TaskDetailView(APIView):
     def delete(self,request,pk):
         task = self.get_object(pk)
         task.delete()
-        return Response(status=status.HTTP_404_NOT_FOUND)
+        return Response(status=status.HTTP_200_OK)
     
 
 class Index(View):
     def get(self,request):
         return render(request,'index.html')
     
-    def post(self,request):
-        title = request.POST['title']
-        Task.objects.create(title=title)
-        return redirect('index')
+    # def post(self,request):
+    #     title = request.POST['title']
+    #     Task.objects.create(title=title)
+    #     return redirect('index')
         
     
 

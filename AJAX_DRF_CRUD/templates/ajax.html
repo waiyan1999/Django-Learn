@@ -1,5 +1,153 @@
-<script>
+    <script>
 
+
+    const api_url = "/api/task/";
+
+    function taskList(){
+        fetch(api_url,
+        {
+            method : 'GET',
+            headers: {
+           
+            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+        }
+        })
+        .then(response => response.json())
+        .then(data => {
+            const tbody = document.getElementById('tasklist');
+            tbody.innerHTML = '';
+            console.log(data);
+
+            data.forEach(todo => {
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${todo.id}</td>
+                    <td>${todo.title}</td>
+                    <td>${todo.completed ? 'Yes' : 'No'}</td>
+                    <td>
+                    <button id="edit-${todo.id}" class="btn btn-outline-secondary btn-sm">Edit</button>
+                    <button  id="delete-${todo.id}" class="btn btn-outline-danger btn-sm ">Delete</button>
+                    </td>
+                    `;
+                    
+                    
+                
+                tbody.appendChild(tr);
+
+                const edit_btn = tr.querySelector(`#edit-${todo.id}`);
+                edit_btn.addEventListener('click',function(){
+                    const newTitle = prompt('Enter New title :',todo.title);
+                    editTask(todo.id,newTitle);
+                });
+
+
+                const delete_btn = tr.querySelector(`#delete-${todo.id}`);
+                delete_btn.addEventListener('click',function(){
+                    deleteTask(todo.id);
+                });
+                
+            });
+
+
+        })
+        .catch(error => {
+            console.error('Error occur',error)
+        });
+    }
+
+
+
+    function createTask(){
+        const btn = document.getElementById('submit')
+        btn.addEventListener('click',function(e){
+            e.preventDefault();
+
+            const titleInput = document.getElementById('title');
+            const title = titleInput.value;
+
+            fetch(api_url,
+                { method : 'POST' ,
+                    headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                },
+
+                    body : JSON.stringify({title : title})
+                    
+
+                }
+                
+            )
+            
+            .then ( response => response.json())
+            .then ( data => {
+                console.log ( 'New Item Created')
+                titleInput.value = '';
+                taskList()
+
+            })
+            .catch(error => {
+                close.error(error)
+            })
+
+        })
+        
+    }
+
+
+
+
+    function editTask(id,newTitle){
+
+        
+
+        fetch(`/api/task-detail/${id}/`,
+            {
+                method : 'PUT',
+                headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+            },
+                body : JSON.stringify({ title : newTitle })
+            }
+        )
+        .then (response => response.json())
+        .then ( data => {
+            console.log("Title Updated")
+            console.log('Data', data)
+            taskList()
+        })
+        .catch(error => {
+            console.log(error)
+        })
+
+    }
+
+
+    function deleteTask(id){
+        fetch(`/api/task-detail/${id}/`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+            }
+        })
+        .then(response => {
+            if (response.ok) {
+                console.log('Task deleted');
+                taskList(); // Refresh the list after deletion
+            } else {
+                console.error('Failed to delete task');
+            }
+        })
+        .catch(error => {
+            console.error('Error deleting task:', error);
+        });
+    }
+
+    createTask()
+
+    taskList()   
     
-    
-</script>
+    </script>
