@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+ {% load static %}
+  {% block title %} Index {% endblock title %} 
+
+
+  {% block content %}
+<h1>This is index</h1>
+
+<h1>Category</h1>
+
+<div class="form">
+  <form action="" class="form-control">
+    {% csrf_token %}
+    <input type="text" name="" id="category-input" class="form-control" />
+    <br />
+    <input
+      type="submit"
+      name=""
+      id="category-btn"
+      class="btn btn-outline-secondary"
+    />
+  </form>
+</div>
+<br />
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Category</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody id="category"></tbody>
+</table>
+
+
+<div class="product">
+    <h1>Product List</h1>
+    <form action="" class="form-control">
+        {% csrf_token %}
+
+        <input type="text" name="product-name" id="product-name" class="form-control" placeholder="Product Nmae"> <br>
+
+        <input type="number" name="product-price" id="product-price"  class="form-control" placeholder="Product Price"> <br>
+
+        <input type="number" name="product-stock" id="product-stock" class="form-control" placeholder="Product Stock"> <br>
+        
+        <input type="text" name="product-description" id="product-description" class="form-control" placeholder="Product Description"> <br>
+
+        <input type="submit" name="" id="submit-product" class="btn btn-outline-primary">
+    </form>
+</div>
+
+
+
+{% endblock content %}

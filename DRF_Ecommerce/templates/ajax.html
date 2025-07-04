@@ -1,0 +1,169 @@
+<script>
+
+  function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== "") {
+      const cookies = document.cookie.split(";");
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        // Does this cookie string begin with the name we want?
+        if (cookie.substring(0, name.length + 1) === name + "=") {
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          break;
+        }
+      }
+    }
+    return cookieValue;
+  }
+  const csrftoken = getCookie("csrftoken");
+
+  const category_url = "/api/category/";
+  const category_tbody = document.getElementById("category");
+  category_tbody.innerHTML = "";
+
+  //Read
+  function categoryList() {
+    fetch(category_url, {
+      method: "GET",
+    })
+      .then((resposne) => resposne.json())
+      .then((data) => {
+        category_tbody.innerHTML = "";
+        console.log(data);
+        data.forEach((category) => {
+          const tr = document.createElement("tr");
+          tr.innerHTML = `
+
+            <td>${category.id}</td>
+            <td>${category.name}</td>
+            <td>
+                <button  id="categoryEdit-${category.id}" class="btn btn-outline-warning btn-sm">Edit</button>
+                <button id="categoryDelete-${category.id}" class="btn btn-outline-danger btn-sm" >Delete</button>
+            </td>
+
+            `;
+
+          category_tbody.appendChild(tr);
+
+
+            const deleteCategoryBtn = document.getElementById(`categoryDelete-${category.id}`);
+            deleteCategoryBtn.addEventListener('click',function(){
+                deleteCategory(category.id);
+           })
+
+
+           const editCategoryBtn = document.getElementById(`categoryEdit-${category.id}`);
+           editCategoryBtn.addEventListener('click',function(){
+                const newname = prompt('Enter New Category Nmae:', category.name)
+                editCategory(category.id,newname);
+           })
+
+
+        });
+      });
+  }
+
+  //categoryList();
+
+  //Create
+  const category_btn = document.getElementById("category-btn");
+  category_btn.addEventListener("click", function (event) {
+    event.preventDefault();
+
+    const category_input = document.getElementById("category-input");
+    categoryValue = category_input.value;
+
+    fetch(category_url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRFToken": csrftoken,
+      },
+      body: JSON.stringify({
+        name: categoryValue,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("New Category Created");
+        category_input.value = "";
+        categoryList();
+      });
+  });
+
+
+ 
+
+
+  //Delete Category
+function deleteCategory(id){
+    const categoryDetail_url = `/api/category-detail/${id}/`;
+    fetch(categoryDetail_url, { 
+        method : "DELETE",
+        headers : {
+            "Content-Type" : 'application/json',
+            "X-CSRFToken" : csrftoken
+        }
+    })
+    .then((response) => {
+        console.log('Category Deleted ')
+        categoryList()
+    });
+}
+  
+//Edit Category
+function editCategory(id,newCategoryName){
+    const categoryDetail_url = `/api/category-detail/${id}/`;
+    fetch(categoryDetail_url,
+        {
+            method : "PUT",
+            headers : {
+                "Content-Type":"application/json",
+                'X-CSRFToken': csrftoken
+            },
+            body : JSON.stringify({
+                name : newCategoryName
+            })
+        }
+    )
+    .then(response => response.json())
+    .then(data => {
+        console.log("Category Updated")
+        console.log(data)
+        categoryList()
+    })
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  //Initial Load
+  document.addEventListener("DOMContentLoaded", categoryList());
+</script>
