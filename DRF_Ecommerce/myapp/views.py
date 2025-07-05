@@ -5,7 +5,11 @@ from myapp.serializers import CategorySerializer,ProductSerializer,CartSerialize
 
 
 def index(request):
-    return render(request, 'index.html')
+    categories = Category.objects.all()
+    context = {"categories": categories}
+    return render(request, 'index.html', context)
+
+
 
 
 #API

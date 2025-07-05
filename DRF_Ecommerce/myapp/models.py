@@ -23,7 +23,7 @@ class Cart(models.Model):
     created_at = models.DateField(auto_now_add=True)
     
     def __str__(self):
-        return self.id
+        return f'{self.id}'
     
 class CartItem(models.Model):
     cart = models.ForeignKey(Cart,on_delete=models.CASCADE, related_name='items')
