@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Index {% endblock title %}
+
+{% block content %}
+
+
+<h1>This is index</h1>
+
+<br>
+<br>
+<!-- category -->
+<div class="category">
+
+   <div class="card">
+    <div class="card-header bg-info">Category</div>
+    <div class="card-body">
+        <form action="" class="form-control">
+            <input type="text" name="categoryName" id="categoryName" class="form-control my-3" placeholder="name"><br>
+            <button class="btn btn-outline-primary" id="categorySubmit" onclick="createCategory(event)" >Submit</button>
+        </form>
+    </div>
+     <div class=" card-body">
+        <table class="table table-hover table-boder table-responsive">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Created_at</th>
+                    <th>Edited_at</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="categoryTBody">
+            </tbody>
+            
+        </table>
+    </div>
+   </div>
+     
+</div>
+
+
+<!-- Product -->
+ <div class="product">
+    <div class="card my-3">
+        <div class="card card-header bg-info"> Product</div>
+        <div class="card-body">
+            <form action="" class="form-control my-auto"  >
+                <select name="" id="productCateogry" class="form-control">
+                <option value=""></option>
+                </select>
+                <input type="text" name="" id="productName" class="form-control my-3" placeholder="name">
+                <input type="number" name="" id="productPrice"  class="form-control my-3" placeholder="price">
+                <input type="number" name="" id="productStock" class="form-control my-3" placeholder="stock">
+                <textarea name="productDescription" id="productDescription" class="form-control my-3" placeholder="description"></textarea>
+                <button class="btn btn-outline-primary" id="productSubmitBtn" onclick="createProduct(event)">Submit</button>
+            </form>
+        </div>
+         <div class="card-body my-3">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Category</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Stock</th>
+                    <th>Descripton</th>
+                    <th>Created_Time</th>
+                    <th>Edited_Time</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="productTBody">
+
+            </tbody>
+        </table>
+    </div>
+    </div>
+   
+ </div>
+
+ <!-- Cart -->
+  <div class="Cart">
+    <div class="card my-3">
+        <div class="card-header bg-info"> Cart </div>
+    <div class="card-body">
+
+        <table class="table table-hover table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Created_Time</th>
+                </tr>
+            </thead>
+            <tbody id="cartTBody">
+
+            </tbody>
+
+        </table>
+    
+        
+    </div>
+    </div>
+    
+  </div>
+
+  <!-- CartItem -->
+   <div class="cartItem">
+    <div class="card my-3">
+        <div class="card-header bg-info">
+            Cart Item
+        </div>
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Cart</th>
+                        <th>Product</th>
+                        <th>Quantitiy</th>
+                        <th>Created_Time</th>
+                        <th>Edited_Time</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="cartItemTBody" > 
+
+                </tbody>
+            </table>
+            
+        </div>
+    </div>
+
+   </div>
+
+
+
+
+{% endblock content %}
